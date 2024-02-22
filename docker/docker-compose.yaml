@@ -17,6 +17,17 @@ services:
       - "8080:8080"
     depends_on:
       - banco
+  front:
+    image: ianvictor/hackaton_ads_front:v8.0
+    env_file:
+      - front.env
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - back
 networks:
   default:
     driver: bridge
