@@ -5,7 +5,7 @@ services:
     container_name: banco_de_dados
     environment:
       POSTGRES_PASSWORD: 123
-      POSTGRES_DB: encurtador
+      POSTGRES_DB: hackaton
       POSTGRES_USER: ian
     ports:
       - "5432:5432"
