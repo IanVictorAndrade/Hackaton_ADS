@@ -18,14 +18,11 @@ services:
     depends_on:
       - banco
   front:
-    image: ianvictor/hackaton_ads_front:v8.0
+    image: ianvictor/hackaton_ads_front:v1.0
     env_file:
       - front.env
     ports:
       - "3000:3000"
-    volumes:
-      - .:/app
-      - /app/node_modules
     depends_on:
       - back
 networks:
