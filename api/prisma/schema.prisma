@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Curso {
+  id          String       @id @default(uuid())
+  nome        String
+  nivel       String // Técnico, Graduação, Pós-Graduação
+  disciplinas Discipline[]
+
+  @@map("curso")
+}
+
+model Professor {
+  id                  String                @id @default(uuid())
+  nome                String
+  email               String                @unique
+  senha               String
+  matricula           Int                   @unique
+  coordenador         Boolean
+  preferencias        ProfessorPreference[]
+  disciplinasTeaching DisciplineProfessor[]
+  admin               LoginAdm[]
+
+  @@map("professor")
+}
+
+model ProfessorPreference {
+  id           String      @id @default(uuid())
+  professorId  String
+  disciplinaId String?
+  area         String?
+  periodo      String?
+  nivelEnsino  String?
+  professor    Professor   @relation(fields: [professorId], references: [id])
+  disciplina   Discipline? @relation(fields: [disciplinaId], references: [id])
+
+  @@map("professor_preference")
+}
+
+model Discipline {
+  id                   String                @id @default(uuid())
+  nome                 String
+  carga_horaria        Int
+  turno                String
+  cursoId              String
+  curso                Curso                 @relation(fields: [cursoId], references: [id])
+  professorPreferences ProfessorPreference[]
+  disciplineProfessors DisciplineProfessor[]
+
+  @@map("dicipline")
+}
+
+model LoginAdm {
+  id          String     @id @default(uuid())
+  nome        String
+  senha       String
+  professor   Professor? @relation(fields: [professorId], references: [id])
+  professorId String?
+
+  @@map("login_admin")
+}
+
+model DisciplineProfessor {
+  disciplineId String
+  professorId  String
+  discipline   Discipline @relation(fields: [disciplineId], references: [id])
+  professor    Professor  @relation(fields: [professorId], references: [id])
+
+  @@id([disciplineId, professorId])
+}
