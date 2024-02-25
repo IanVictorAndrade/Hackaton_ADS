@@ -7,70 +7,70 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Curso {
-  id          String       @id @default(uuid())
-  nome        String
-  nivel       String // Técnico, Graduação, Pós-Graduação
-  disciplinas Discipline[]
+// model Curso {
+//   id          String       @id @default(uuid())
+//   nome        String
+//   nivel       String // Técnico, Graduação, Pós-Graduação
+//   disciplinas Discipline[]
 
-  @@map("curso")
-}
+//   @@map("curso")
+// }
 
 model Professor {
-  id                  String                @id @default(uuid())
-  nome                String
-  email               String                @unique
-  senha               String
-  matricula           Int                   @unique
-  coordenador         Boolean
-  preferencias        ProfessorPreference[]
-  disciplinasTeaching DisciplineProfessor[]
-  admin               LoginAdm[]
+  id          String    @id @default(uuid())
+  nome        String
+  email       String    @unique
+  senha       String
+  matricula   Int       @unique
+  coordenador Boolean
+  // preferencias        ProfessorPreference[]
+  // disciplinasTeaching DisciplineProfessor[]
+  admin       LoginAdm? @relation(fields: [adminId], references: [id])
+  adminId     String?
 
   @@map("professor")
 }
 
-model ProfessorPreference {
-  id           String      @id @default(uuid())
-  professorId  String
-  disciplinaId String?
-  area         String?
-  periodo      String?
-  nivelEnsino  String?
-  professor    Professor   @relation(fields: [professorId], references: [id])
-  disciplina   Discipline? @relation(fields: [disciplinaId], references: [id])
+// model ProfessorPreference {
+//   id           String      @id @default(uuid())
+//   professorId  String
+//   disciplinaId String?
+//   area         String?
+//   periodo      String?
+//   nivelEnsino  String?
+//   professor    Professor   @relation(fields: [professorId], references: [id])
+//   disciplina   Discipline? @relation(fields: [disciplinaId], references: [id])
 
-  @@map("professor_preference")
-}
+//   @@map("professor_preference")
+// }
 
-model Discipline {
-  id                   String                @id @default(uuid())
-  nome                 String
-  carga_horaria        Int
-  turno                String
-  cursoId              String
-  curso                Curso                 @relation(fields: [cursoId], references: [id])
-  professorPreferences ProfessorPreference[]
-  disciplineProfessors DisciplineProfessor[]
+// model Discipline {
+//   id                   String                @id @default(uuid())
+//   nome                 String
+//   carga_horaria        Int
+//   turno                String
+//   cursoId              String
+//   curso                Curso                 @relation(fields: [cursoId], references: [id])
+//   professorPreferences ProfessorPreference[]
+//   disciplineProfessors DisciplineProfessor[]
 
-  @@map("dicipline")
-}
+//   @@map("dicipline")
+// }
 
 model LoginAdm {
-  id          String     @id @default(uuid())
+  id          String      @id @default(uuid())
   nome        String
   senha       String
-  professor   Professor? @relation(fields: [professorId], references: [id])
-  professorId String?
+  professores Professor[]
 
   @@map("login_admin")
 }
 
-model DisciplineProfessor {
-  disciplineId String
-  professorId  String
-  discipline   Discipline @relation(fields: [disciplineId], references: [id])
-  professor    Professor  @relation(fields: [professorId], references: [id])
+// model DisciplineProfessor {
+//   disciplineId String
+//   professorId  String
+//   discipline   Discipline @relation(fields: [disciplineId], references: [id])
+//   professor    Professor  @relation(fields: [professorId], references: [id])
 
-  @@id([disciplineId, professorId])
-}
+//   @@id([disciplineId, professorId])
+// }
