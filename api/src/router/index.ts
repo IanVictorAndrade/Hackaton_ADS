@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { LoginAdminController } from "../controllers/admin/loginAdmin.controller";
-import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
+import { ensureAuthenticated } from "../middlewares/ensureAuthenticated.middleware";
 import { CreateProfessorController } from "../controllers/admin/createProfessor.controller";
 import { ListarProfessorController } from "../controllers/admin/listarProfessor.controller";
 import { DeleteProfessorController } from "../controllers/admin/deleteProfessor.controller";
