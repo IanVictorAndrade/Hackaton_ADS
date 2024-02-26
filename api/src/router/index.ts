@@ -4,6 +4,7 @@ import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 import { CreateProfessorController } from "../controllers/admin/createProfessor.controller";
 import { ListarProfessorController } from "../controllers/admin/listarProfessor.controller";
 import { DeleteProfessorController } from "../controllers/admin/deleteProfessor.controller";
+import { UpdateProfessorController } from "../controllers/admin/updateProfessor.controller";
 
 const router = Router();
 
@@ -11,6 +12,7 @@ const adminLogin = new LoginAdminController();
 const professor = new CreateProfessorController();
 const listarProfessor = new ListarProfessorController();
 const deletarProfessor = new DeleteProfessorController();
+const editarProfessor = new UpdateProfessorController();
 
 router.post("/api/adimin/login", adminLogin.handlelogin);
 router.post("/api/adimin/create", ensureAuthenticated, professor.handle);
@@ -20,5 +22,6 @@ router.delete(
   ensureAuthenticated,
   deletarProfessor.handle
 );
+router.put("/api/adimin/edit/:id", ensureAuthenticated, editarProfessor.handle);
 
 export { router };
