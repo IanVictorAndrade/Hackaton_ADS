@@ -7,7 +7,7 @@ export class ListarProfessorController {
 
     try {
       const result = await usecase.list();
-      return response.status(201).json(result);
+      return response.status(200).json(result);
     } catch (err) {
       return response.status(401).json(err);
     }
